@@ -177,6 +177,7 @@ int main()
 	cout << b_c->get_xp2() << endl;
 	b_c->~B();
 
+	cout << "test gita";
 	system("PAUSE");
 	return 0;
 }
