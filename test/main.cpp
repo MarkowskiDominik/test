@@ -1,8 +1,10 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
+#include <chrono>
 
 using namespace std;
+using namespace std::chrono;
 
 class A
 {
@@ -85,10 +87,24 @@ public:
 	string virtual get_xp2(){ return xp; }
 };
 
+int count(int howMany){
+	auto counter = 0;
+	while (howMany-->0)
+	{
+		for (int i = 0; i<1000; i++)
+			if (counter % 2 == 0)
+				counter++;
+			else
+				counter--;
+	}
+	return counter;
+}
+
 int main()
 {
-	cout << "zaawansowany test dziedziczenia\n";
 	/*
+	cout << "zaawansowany test dziedziczenia\n";
+
 	cout << "\n\tklasa A\n";
 	A* a = new A();
 	a->func1();
@@ -130,7 +146,7 @@ int main()
 	cout << c->get_xp1() << endl;
 	cout << c->get_xp2() << endl;
 	c->~C();
-	*/
+	
 	cout << "\n\twskaznik A, klasa B\n";
 	A* a_b = new B();
 	a_b->func1();
@@ -176,8 +192,23 @@ int main()
 	cout << b_c->get_xp1() << endl;
 	cout << b_c->get_xp2() << endl;
 	b_c->~B();
+	*/
 
-	cout << "test gita";
+	auto t0 = high_resolution_clock::now();
+	int n = 10000;
+	n = count(n);
+	auto t1 = high_resolution_clock::now();
+	cout << "for n=" << n << " time=" << duration_cast<milliseconds>(t1 - t0).count() << " ms\n";
+	cout << "data: " << __DATE__ << endl;
+	cout << "czas: " << __TIME__ << endl;
+	cout << "plik: " << __FILE__ << endl;
+	cout << "linia: " << __LINE__ << endl;
+	//cout << "funkcja: " << __FUNC__ << endl;
+
+	int tab[10] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+	for (auto x : tab) cout << x << ", ";
+
+
 	system("PAUSE");
 	return 0;
 }
