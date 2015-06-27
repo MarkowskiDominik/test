@@ -37,7 +37,7 @@ public:
 		b.size = b.count = 0;
 	}
 
-	explicit Buffor(std::initializer_list<T> il, const A& = A())
+	explicit Buffor(std::initializer_list<T> il, const A& a = A())
 		: alloc(a), elem(alloc.allocate(il.size())), add(elem), get(elem), size(il.size()), count(il.size())
 	{
 		uninitialized_copy(il.begin(), il.end(), begin());
@@ -129,7 +129,12 @@ public:
 			alloc.destroy(elem + i);
 		alloc.deallocate(elem, get_size());
 
-		//uzupelnic
+		elem = alloc.allocate(il.size());
+		size = count = il.size();
+		add = get = elem;
+
+		if (il.size() != 0) uninitialized_copy(il.begin(), il.end(), begin());
+		//if (il.size() != 0) uninitialized_copy_n(il.begin(), il.size(), begin());
 	}
 
 	//extra function
@@ -163,9 +168,9 @@ public:
 
 	//iterators
 	iterator begin() { return elem; }
-	iterator end() { return elem + size(); }
+	iterator end() { return elem + get_size(); }
 	const_iterator cbegin() const { return elem; }
-	const_iterator cend() const { return elem + size(); }
+	const_iterator cend() const { return elem + get_size(); }
 
 private:
 	T* elem;
