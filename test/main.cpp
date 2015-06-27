@@ -1,10 +1,15 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
+#include <vector>
+#include <memory> 
 #include <chrono>
+#include <functional>
+#include <iomanip>
 
 using namespace std;
-using namespace std::chrono;
+using namespace std::chrono; 
+using namespace std::placeholders;
 
 class A
 {
@@ -100,6 +105,17 @@ int count(int howMany){
 	return counter;
 }
 
+void f(int n1, int n2, int n3, const int& n4, int n5)
+{
+	cout << n1 << " " << n2 << " " << n3 << " " << n4 << " " << n5 << endl;
+}
+
+shared_ptr<string> pNico(new string("nico"), [](string *p)
+{
+	cout << "delete " << *p << endl;
+	delete p;
+});
+
 int main()
 {
 	/*
@@ -192,7 +208,6 @@ int main()
 	cout << b_c->get_xp1() << endl;
 	cout << b_c->get_xp2() << endl;
 	b_c->~B();
-	*/
 
 	auto t0 = high_resolution_clock::now();
 	int n = 10000;
@@ -207,6 +222,95 @@ int main()
 
 	int tab[10] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 	for (auto x : tab) cout << x << ", ";
+	cout << endl;
+
+	n = 7;
+	auto f1 = std::bind(f, _2, _1, 42, std::cref(n), n);
+	f1(5, 8, 1001); // 5 jest zwi¹zane z _1, 8 jest zwi¹zane z _2
+	*/
+
+	// dwa wspóldzielone wskaŸnikireprezentuj¹ce dwa imiona
+	shared_ptr<string> pNico(new string("nico"));
+	shared_ptr<string> pJutta(new string("jutta"));
+	// popraw zapis imion wielk¹ liter¹
+	(*pNico)[0] = 'N';
+	pJutta->replace(0, 1, "J");
+	// umieœæ wskaŸniki w kontenerze (wielokrotnie)
+	vector<shared_ptr<string>> whoMadeCoffee;
+	whoMadeCoffee.push_back(pJutta);
+	whoMadeCoffee.push_back(pJutta);
+	whoMadeCoffee.push_back(pNico);
+	whoMadeCoffee.push_back(pJutta);
+	whoMadeCoffee.push_back(pNico);
+
+	// wypisz wszystkie elementy
+	for (auto ptr : whoMadeCoffee) {
+		cout << *ptr << " ";
+	}
+	cout << endl;
+	// jeszcze raz zmieñ pisowniê jednego z imion
+	*pNico = "Nicolai";
+	// ponownie wypisz wszystkie elementy
+	for (auto ptr : whoMadeCoffee) {
+		cout << *ptr << " ";
+	}
+	cout << endl;
+	// wypisz wewnêtrzne dane wskaŸnika
+	cout << "use_count: " << whoMadeCoffee[0].use_count() << endl;
+
+	pNico = nullptr; // usuwamy wi¹zanie dla lokalnej kopii wskaŸnika
+	whoMadeCoffee.resize(2); //usuwamy wskaŸniki na "nico" z tabeli
+	cout << "po resize" << endl;
+	whoMadeCoffee[0] = nullptr;
+	whoMadeCoffee[1] = nullptr;
+	cout << "use_count: " << pNico.use_count() << endl;
+	cout << "use_count: " << pJutta.use_count() << endl;
+
+
+	bool bVal = true;
+	cout << bVal << endl;
+	cout << boolalpha << bVal << endl;
+	int iVal = -23;
+	string str = "abc";
+	cout << '"' << iVal << '"' << endl;
+	cout << '"' << setw(6) << iVal << '"' << endl;
+	cout << '"' << setw(1) << iVal << '"' << endl;
+	cout << '"' << setw(6) << setfill('*') << iVal << '"' << endl;
+	cout << '"' << setw(6) << iVal << '"' << endl;
+	cout << '"' << str << '"' << endl;
+	cout << '"' << setw(6) << str << '"' << endl;
+	cout << '"' << setw(1) << str << '"' << endl;
+	cout << '"' << setw(6) << setfill('*') << str << '"' << endl;
+	cout << '"' << setw(6) << str << '"' << endl;
+	cout << setfill(' ');
+	cout << "left, right, internal" << endl;
+	cout << '"' << left << setw(6) << iVal << '"' << endl;
+	cout << '"' << right << setw(6) << iVal << '"' << endl;
+	cout << '"' << internal << setw(6) << iVal << '"' << endl;
+	cout << '"' << left << setw(6) << str << '"' << endl;
+	cout << '"' << right << setw(6) << str << '"' << endl;
+	cout << '"' << internal << setw(6) << str << '"' << endl;
+	cout << '"' << oct << iVal << '"' << endl;
+	cout << "iVal=" << iVal << endl;
+	iVal = 129;
+	cout << '"' << oct << iVal << '"' << endl;
+	cout << '"' << dec << iVal << '"' << endl;
+	cout << '"' << hex << iVal << '"' << endl;
+	double fVal = 123.456;
+	cout << "double:" << endl;
+	cout << '"' << fVal << '"' << endl;
+	cout << '"' << setw(8) << fVal << '"' << endl;
+	cout << '"' << setprecision(10) << fVal << '"' << endl;
+	// liczba cyfr znacz¹cych
+	cout << '"' << setprecision(4) << fVal << '"' << endl;
+	// liczba cyfr znacz¹cych
+	cout << '"' << setprecision(1) << fVal << '"' << endl;
+	
+	vector<char> v;
+	v.resize(50);
+	strcpy(v.data(), "witaj swiecie");
+	printf("%s\n", v.data());
+	printf("%s\n", &v[0]);
 
 
 	system("PAUSE");
