@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "test\test.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "kalkulator", "kalkulator\kalkulator.vcxproj", "{B12702AD-ABFB-343A-A199-8E24837244A3}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bufor_cykliczny", "bufor_cykliczny\bufor_cykliczny.vcxproj", "{65FAD094-C209-45F4-B159-C615B9C279C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -21,6 +23,10 @@ Global
 		{B12702AD-ABFB-343A-A199-8E24837244A3}.Debug|Win32.Build.0 = Debug|Win32
 		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|Win32.ActiveCfg = Release|Win32
 		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|Win32.Build.0 = Release|Win32
+		{65FAD094-C209-45F4-B159-C615B9C279C6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{65FAD094-C209-45F4-B159-C615B9C279C6}.Debug|Win32.Build.0 = Debug|Win32
+		{65FAD094-C209-45F4-B159-C615B9C279C6}.Release|Win32.ActiveCfg = Release|Win32
+		{65FAD094-C209-45F4-B159-C615B9C279C6}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
