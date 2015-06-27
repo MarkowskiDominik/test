@@ -25,6 +25,21 @@ int main()
 	cout << "\nkonstruktor z przenoszacy\n";
 	Buffor<int> bufor5(std::move(bufor4));
 	cout << bufor5.get_size() << " " << bufor5.get_count() << " " << bufor5.empty() << " " << bufor5.full();
+
+	cout << "\n\noperacje dodania/pobrania elementow";
+	bufor2.enqueue(1);
+	cout << "\nadd 1\t" << bufor2.get_size() << " " << bufor2.get_count() << " " << bufor2.empty() << " " << bufor2.full();
+	bufor2.enqueue(2);
+	cout << "\nadd 2\t" << bufor2.get_size() << " " << bufor2.get_count() << " " << bufor2.empty() << " " << bufor2.full();
+	bufor2.enqueue(3);
+	cout << "\nadd 3\t" << bufor2.get_size() << " " << bufor2.get_count() << " " << bufor2.empty() << " " << bufor2.full();
+
+	int tmp = bufor2.dequeue();
+	cout << "\nget " << tmp << "\t" << bufor2.get_size() << " " << bufor2.get_count() << " " << bufor2.empty() << " " << bufor2.full();
+	tmp = bufor2.dequeue();
+	cout << "\nget " << tmp << "\t" << bufor2.get_size() << " " << bufor2.get_count() << " " << bufor2.empty() << " " << bufor2.full();
+	tmp = bufor2.dequeue();
+	cout << "\nget " << tmp << "\t" << bufor2.get_size() << " " << bufor2.get_count() << " " << bufor2.empty() << " " << bufor2.full();
 	
 	
 	system("PAUSE");

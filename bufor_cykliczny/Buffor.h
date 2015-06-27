@@ -51,35 +51,45 @@ public:
 		alloc.deallocate(elem, get_size());
 	}
 
-	//add delete operations
+	//add get operations
 	void enqueue(const T& val)
 	{
 		if (!full())
 		{
-
+			*add = val;
+			add++;
+			++count;
+			if (add == end()) add = elem;
 		}
-		else
-			throw exception;
+		//else
+			//throw exception("full");
 	}
 
 	void enqueue(T&& val)
 	{
 		if (!full())
 		{
-
+			*add = std::move(val);
+			add++;
+			++count;
+			if (add == end()) add = elem;
 		}
-		else
-			throw exception;
+		//else
+			//throw exception("full");
 	}
 
-	reference dequeue() const
+	reference dequeue()
 	{
 		if (!empty())
 		{
-
+			T* tmp = get;
+			get++;
+			--count;
+			if (get == end()) get = elem;
+			return *tmp;
 		}
-		else
-			throw exception;
+		//else
+			//throw exception("empty");
 	}
 
 	//operator=
